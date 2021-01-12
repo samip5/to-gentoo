@@ -28,7 +28,7 @@ if [ "$(whoami)" != "root" ]; then
   exit 1
 fi
 
-for f in sed tar wget curl tar grep awk bash; do
+for f in sed tar wget tar grep awk bash; do
   which "${f}" >/dev/null || {
     echo "${f} missing. Please install." >&2
     exit 1
@@ -64,7 +64,7 @@ if [ "${FREE}" -lt "${MIN}" ]; then
   exit 1
 fi
 
-STAGE3=$(curl -s "${MIRROR}releases/amd64/autobuilds/latest-stage3-amd64.txt" | sed '/^#/d' | cut -d ' ' -f 1)
+STAGE3=$(wget -qO- "${MIRROR}releases/amd64/autobuilds/latest-stage3-amd64.txt" | sed '/^#/d' | cut -d ' ' -f 1)
 if [ -z "${STAGE3}" ]; then
   echo "Is the network up?" >&2
   exit 1
